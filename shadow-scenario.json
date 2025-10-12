@@ -1,0 +1,80 @@
+{
+  "id": "shadow-autopilot-swarmrag-scenario",
+  "name": "Full AI Agent Orchestration (AutoPilot + RAG + Swarm)",
+  "description": "AutoPilot orchestrates Whisper, Shadow, Reviewer, RAG, Swarm, Notion, and Slack",
+  "nodes": [
+    {
+      "id": "autopilot",
+      "name": "AutoPilot Commander",
+      "type": "agent",
+      "agentId": "autopilot_agent",
+      "output": [
+        "whisper",
+        "shadow",
+        "swarm"
+      ]
+    },
+    {
+      "id": "whisper",
+      "name": "Whisper Transcriber",
+      "type": "agent",
+      "agentId": "whisper_agent",
+      "output": [
+        "shadow"
+      ]
+    },
+    {
+      "id": "shadow",
+      "name": "Shadow Generator",
+      "type": "agent",
+      "agentId": "shadow_agent",
+      "output": [
+        "reviewer",
+        "rag"
+      ]
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "type": "agent",
+      "agentId": "reviewer_agent",
+      "output": [
+        "notion",
+        "slack"
+      ]
+    },
+    {
+      "id": "rag",
+      "name": "RAG Knowledge Retriever",
+      "type": "agent",
+      "agentId": "rag_agent",
+      "output": [
+        "shadow"
+      ]
+    },
+    {
+      "id": "swarm",
+      "name": "Swarm Coordinator",
+      "type": "agent",
+      "agentId": "swarm_agent",
+      "output": [
+        "shadow",
+        "reviewer"
+      ]
+    },
+    {
+      "id": "notion",
+      "name": "Notion Logger",
+      "type": "agent",
+      "agentId": "notion_agent",
+      "output": []
+    },
+    {
+      "id": "slack",
+      "name": "Slack Messenger",
+      "type": "agent",
+      "agentId": "slack_agent",
+      "output": []
+    }
+  ]
+}

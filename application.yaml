@@ -1,0 +1,123 @@
+applications:
+  - id: "shadow-app"
+    name: "Shadow Agent App"
+    description: "Multi-agent system with Shadow, Reviewer, Whisper, Notion, Slack, and AutoPilot agents"
+
+    privacyKeys:
+      - "default-key"
+      - "public"
+      - "priv"
+
+    registry:
+      shadow_agent:
+        options:
+          - name: "SHADOW_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/run_agent.sh main.py"]
+          environment:
+            - name: "SHADOW_API_KEY"
+              from: "SHADOW_API_KEY"
+            - name: "SHADOW_URL"
+              value: "https://api.shadow.ai"
+            - name: "MODEL_NAME"
+              value: "shadow/openai/gpt-4.1-mini"
+
+      reviewer_agent:
+        options:
+          - name: "REVIEWER_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/reviewer.sh reviewer.py"]
+          environment:
+            - name: "REVIEWER_API_KEY"
+              from: "REVIEWER_API_KEY"
+            - name: "REVIEWER_URL"
+              value: "https://api.reviewer.ai"
+            - name: "MODEL_NAME"
+              value: "reviewer/openai/gpt-3.5"
+
+      whisper_agent:
+        options:
+          - name: "WHISPER_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/whisper.sh whisper.py"]
+          environment:
+            - name: "WHISPER_API_KEY"
+              from: "WHISPER_API_KEY"
+            - name: "WHISPER_URL"
+              value: "https://api.openai.com/v1/audio/transcriptions"
+
+      notion_agent:
+        options:
+          - name: "NOTION_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/notion.sh notion.py"]
+          environment:
+            - name: "NOTION_API_KEY"
+              from: "NOTION_API_KEY"
+            - name: "NOTION_DATABASE_ID"
+              from: "NOTION_DATABASE_ID"
+
+      slack_agent:
+        options:
+          - name: "SLACK_BOT_TOKEN"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/slack.sh slack.py"]
+          environment:
+            - name: "SLACK_BOT_TOKEN"
+              from: "SLACK_BOT_TOKEN"
+            - name: "SLACK_CHANNEL_ID"
+              from: "SLACK_CHANNEL_ID"
+
+      autopilot_agent:
+        options:
+          - name: "AUTOPILOT_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/autopilot.sh autopilot.py"]
+          environment:
+            - name: "AUTOPILOT_API_KEY"
+              from: "AUTOPILOT_API_KEY"
+            - name: "AUTOPILOT_MODEL"
+              value: "openai/gpt-4-turbo-latest"
+            - name: "AUTOPILOT_URL"
+              value: "https://api.autopilot.ai"
+rag_agent:
+        options:
+          - name: "RAG_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/rag.sh rag.py"]
+          environment:
+            - name: "RAG_API_KEY"
+              from: "RAG_API_KEY"
+            - name: "RAG_MODEL"
+              value: "openai/gpt-4-32k"
+            - name: "VECTOR_DB"
+              value: "pinecone"
+
+      swarm_agent:
+        options:
+          - name: "SWARM_API_KEY"
+            type: "string"
+        runtime:
+          type: "executable"
+          command: ["bash", "-c", "${PROJECT_DIR}/swarm.sh swarm.py"]
+          environment:
+            - name: "SWARM_API_KEY"
+              from: "SWARM_API_KEY"
+            - name: "SWARM_URL"
+              value: "https://api.swarmbrain.ai"
+            - name: "MODEL_NAME"
+              value: "swarm/coordination-v2"

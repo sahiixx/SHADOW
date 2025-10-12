@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  coral-server:
+    image: coralprotocol/coral-server:latest
+    container_name: coral-server
+    volumes:
+      - ./application.yaml:/app/src/main/resources/application.yaml
+    ports:
+      - "8080:8080"
+
+  coral-studio:
+    image: coralprotocol/coral-studio:latest
+    container_name: coral-studio
+    ports:
+      - "3000:3000"
+    depends_on:
+      - coral-server
+
+  shadow-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-agent
+    depends_on:
+      - coral-server
+    environment:
+      - SHADOW_API_KEY=demo-key
+      - SHADOW_URL=https://api.shadow.ai
+      - MODEL_NAME=shadow/openai/gpt-4.1-mini
+
+  reviewer-agent:
+    image: ghcr.io/example/reviewer-agent:latest
+    container_name: reviewer-agent
+    depends_on:
+      - coral-server
+    environment:
+      - REVIEWER_API_KEY=demo-review-key
+      - REVIEWER_URL=https://api.reviewer.ai
+      - MODEL_NAME=reviewer/openai/gpt-3.5
