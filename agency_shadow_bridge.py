@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Optional
 sys.path.insert(0, "/mnt/c/Users/Sahil Khan/Downloads")
 sys.path.insert(0, "/home/sahiix/sahiixx-bus")
 
-from sovereign_swarm import SafetyCouncil, RBACGuard, Permission, SwarmBus, SwarmMemory
+from sovereign_swarm import SafetyCouncil, RBACGuard, RBACPermission, SwarmBus, SwarmMemory
 from sahiixx_bus.a2a_router import A2ARouter
 from sahiixx_bus.bridge import AgencyBridge, FridayBridge
 
@@ -126,7 +126,7 @@ class ShadowBridge:
     def authorize(self, agent_id: str, permission: str) -> bool:
         """Check if a SHADOW agent has a specific permission."""
         try:
-            perm = Permission(permission)
+            perm = RBACPermission(permission)
             return self.rbac.check(agent_id, perm)
         except ValueError:
             return False

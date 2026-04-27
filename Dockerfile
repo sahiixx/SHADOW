@@ -1,5 +1,5 @@
 # === Base Image ===
-FROM python:3.13-slim
+FROM python:3.12-slim
 
 # === Environment Variables ===
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -20,7 +20,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install Python dependencies using pip
 RUN pip install --upgrade pip && \
-    pip install langchain langchain-core langchain-community pydantic httpx anthropic PyGithub langchain-mcp-adapters
+    pip install "langchain<0.3" "langchain-core<0.3" "langchain-community<0.3" pydantic httpx anthropic PyGithub
 
 # === Add fake .env ===
 RUN printf "BLACKBOXAI_API_KEY=demo-key\nBLACKBOXAI_URL=https://api.blackbox.ai\nMODEL_NAME=blackboxai/openai/gpt-4.1-mini\n" > .env
